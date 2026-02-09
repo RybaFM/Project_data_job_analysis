@@ -1,0 +1,47 @@
+SELECT 
+    job_title_short,
+    company_id,
+    job_location
+FROM january_jobs
+UNION ALL
+SELECT 
+    job_title_short,
+    company_id,
+    job_location
+FROM february_jobs
+UNION ALL
+SELECT 
+    job_title_short,
+    company_id,
+    job_location
+FROM march_jobs;
+
+-- Practice 
+WITH jobs_in_q1 AS (
+SELECT 
+    job_id,
+    job_title_short,
+    salary_year_avg
+FROM january_jobs
+UNION ALL
+SELECT 
+    job_id,
+    job_title_short,
+    salary_year_avg
+FROM february_jobs
+UNION ALL
+SELECT 
+    job_id,
+    job_title_short,
+    salary_year_avg
+FROM march_jobs)
+SELECT 
+    jobs_in_q1.job_id,
+    jobs_in_q1.job_title_short,
+    skills_dim.skill_id,
+    skills_dim.skills,
+    skills_dim.type
+FROM jobs_in_q1
+LEFT JOIN skills_job_dim ON skills_job_dim.job_id = jobs_in_q1.job_id
+LEFT JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
+WHERE jobs_in_q1.salary_year_avg > 70000

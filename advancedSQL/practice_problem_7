@@ -1,0 +1,39 @@
+-- My solution
+SELECT 
+    skills_job_dim_anywhere.skill_id,
+    skills_dim.skills,
+    COUNT(skills_job_dim_anywhere.job_id) AS number_of_jobs
+FROM (
+    SELECT 
+        skills_job_dim.skill_id, 
+        skills_job_dim.job_id,
+        job_postings_fact.job_location
+    FROM skills_job_dim
+    LEFT JOIN job_postings_fact ON job_postings_fact.job_id = skills_job_dim.job_id
+    WHERE job_postings_fact.job_location = 'Anywhere'
+) AS skills_job_dim_anywhere
+LEFT JOIN skills_dim ON skills_dim.skill_id = skills_job_dim_anywhere.skill_id
+GROUP BY skills_job_dim_anywhere.skill_id, skills_dim.skills
+ORDER BY number_of_jobs DESC
+LIMIT 5;
+
+-- Luke's solution
+WITH remote_job_skills AS (
+    SELECT
+        skill_id,
+        COUNT(*) AS skill_count
+    FROM 
+        skills_job_dim
+    INNER JOIN job_postings_fact ON job_postings_fact.job_id = skills_job_dim.job_id
+    WHERE job_postings_fact.job_work_from_home = TRUE
+    GROUP BY skill_id
+)
+SELECT 
+    skills_dim.skill_id,
+    skills_dim.skills,
+    remote_job_skills.skill_count
+FROM remote_job_skills
+INNER JOIN skills_dim ON skills_dim.skill_id = remote_job_skills.skill_id
+ORDER BY remote_job_skills.skill_count DESC
+LIMIT 5;
+
