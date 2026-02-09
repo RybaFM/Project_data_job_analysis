@@ -50,6 +50,10 @@ The salary distribution ranges from approximately $120,000 to $187,000 per year,
 Geographically, Poland dominates the list, hosting the majority of the top-paying roles. Germany appears twice, and Slovakia once, suggesting that Poland is currently the strongest market for high-compensation Data Science roles in Central Europe.
 
 The companies offering these positions are primarily large international corporations and established tech firms, such as State Street, Stripe, SentinelOne, EY, and Delivery Hero, highlighting that global organizations lead the region in salary competitiveness.
+
+![Top Paying Jobs](project_sql\plots\top_paying_jobs_plot.png)
+*This chart shows the highest-paying Data Scientist jobs in Central Europe, with each bar representing a job title and its corresponding average annual salary in USD.*
+
 ### 2. Top Paying Data Scientist Jobs With Skills
 ### 3. Top Demanded Data Scientist Skills
 ### 4. Top Paying Data Scientist Skills
