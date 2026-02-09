@@ -51,7 +51,7 @@ Geographically, Poland dominates the list, hosting the majority of the top-payin
 
 The companies offering these positions are primarily large international corporations and established tech firms, such as State Street, Stripe, SentinelOne, EY, and Delivery Hero, highlighting that global organizations lead the region in salary competitiveness.
 
-![Top Paying Jobs](project_sql\plots\top_paying_jobs_plot.png)
+![Top Paying Jobs](project_sql/plots/top_paying_jobs_plot.png)
 *This chart shows the highest-paying Data Scientist jobs in Central Europe, with each bar representing a job title and its corresponding average annual salary in USD.*
 
 ### 2. Top Paying Data Scientist Jobs With Skills
