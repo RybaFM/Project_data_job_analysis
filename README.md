@@ -52,6 +52,7 @@ Geographically, Poland dominates the list, hosting the majority of the top-payin
 The companies offering these positions are primarily large international corporations and established tech firms, such as State Street, Stripe, SentinelOne, EY, and Delivery Hero, highlighting that global organizations lead the region in salary competitiveness.
 
 ![Top Paying Jobs](project_sql/plots/top_paying_jobs_plot.png)
+
 *This chart shows the highest-paying Data Scientist jobs in Central Europe, with each bar representing a job title and its corresponding average annual salary in USD.*
 ### 2. Top Paying Data Scientist Jobs With Skills
 To identify which skills are needed for each job I used previous query as a CTE and added skill names column.
@@ -123,6 +124,7 @@ LIMIT 5
 The top 5 most in-demand skills for Data Scientists in Central Europe are Python, SQL, R, Azure, and AWS. Python and SQL dominate, appearing in the majority of job listings, while R is also widely requested. Cloud platforms like Azure and AWS are increasingly important, reflecting the growing need for data engineers and Data Scientists who can work with cloud-based data and infrastructure.
 
 ![Top Demanded Skills](project_sql/plots/top_demanded_skills_plot.png)
+
 *This chart shows the most demanded Data Scientist skills in Central Europe, with each bar representing a skill and its corresponding count of jobs requiring it.*
 ### 4. Top Paying Data Scientist Skills
 To identify highest-paying skills I filtered data by position(Data Scientist), by location(Countries of Central Europe) and by average salary(not NULL), I provided average yearly salary as average value of all salaries in the same skill and ordered by average salary.
@@ -158,6 +160,7 @@ suggesting that in Central Europe, cloud, BI, and big data expertise currently p
 pure deep learning skills.
 
 ![Top Paying Skills](project_sql/plots/top_paying_skills_plot.png)
+
 *This chart shows the highest-paying Data Scientist skills in Central Europe, with each bar representing a skill and its corresponding average annual salary in USD.*
 ### 5. The Most Optimal Data Scientist Skills
 To identify most optimal skills I filtered data by position(Data Scientist) by location(Countries of Central Europe) and by average salary(not NULL). I added columns demand count and average yearly salary as I did in 3rd and 4th points. Then I filtered by demand count(more than 2) and ordered by average salary and demand count.
@@ -192,6 +195,7 @@ LIMIT 10;
 Among the top-paying skills, Tableau has the highest average salary ($153,586). Skills like Snowflake, Azure, and R also offer high salaries. In contrast, foundational skills like SQL and Python appear in more jobs but have slightly lower average salaries, reflecting their widespread use.
 
 ![Optimal Skills](project_sql/plots/optimal_skills_plot.png)
+
 *This chart shows optimal Data Scientist skills in Central Europe, with each point representing demand count and average annual salary in USD, near every point listed it's skill's name*
 # What I Learned
 # Conclusions
