@@ -18,7 +18,7 @@ The Data Science field continues to evolve rapidly, with new tools, cloud platfo
 # The Analysis
 Each query in this section investigates a specific aspect of the Data Science job market in Central Europe — from identifying the highest-paying roles to analyzing the most demanded and most valuable skills.
 ### 1. Top Paying Data Scientist Jobs
-To identify highest-paying roles I filtered data by position(Data Scientist) by location(Countries of Central Europe) and ordered by average yearly salary. This query shows the highest-paying positions in Central Europe market. 
+To identify highest-paying roles I filtered data by position(Data Scientist), by location(Countries of Central Europe), by average salary(not NULL) and ordered by average yearly salary. This query shows the highest-paying positions in Central Europe market. 
 ```sql
 SELECT  
     job_id,
@@ -97,7 +97,101 @@ visualization, and Airflow, Git, and GitHub are common for workflow and version 
 familiarity with machine learning and deep learning frameworks like scikit-learn, TensorFlow, PyTorch, MXNet, and 
 Theano is often expected.
 ### 3. Top Demanded Data Scientist Skills
+To identify most in-demand skills I filtered data by position(Data Scientist), by location(Countries of Central Europe), I provided demand count as count of job positions in the same skill and ordered by demand count.
+```sql
+SELECT 
+    skills,
+    COUNT(skills_job_dim.job_id) AS demand_count
+FROM job_postings_fact
+INNER JOIN skills_job_dim ON skills_job_dim.job_id = job_postings_fact.job_id
+INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
+WHERE 
+    job_title_short = 'Data Scientist' AND
+    job_location IN ('Germany', 
+                    'Poland', 
+                    'Czechia', 
+                    'Austria', 
+                    'Hungary', 
+                    'Slovakia', 
+                    'Slovenia', 
+                    'Switzerland', 
+                    'Liechtenstein')
+GROUP BY skills
+ORDER BY demand_count DESC
+LIMIT 5
+```
+The top 5 most in-demand skills for Data Scientists in Central Europe are Python, SQL, R, Azure, and AWS. Python and SQL dominate, appearing in the majority of job listings, while R is also widely requested. Cloud platforms like Azure and AWS are increasingly important, reflecting the growing need for data engineers and Data Scientists who can work with cloud-based data and infrastructure.
+
+![Top Demanded Skills](project_sql/plots/top_demanded_skills_plot.png)
+*This chart shows the most demanded Data Scientist skills in Central Europe, with each bar representing a skill and its corresponding count of jobs requiring it.*
 ### 4. Top Paying Data Scientist Skills
+To identify highest-paying skills I filtered data by position(Data Scientist), by location(Countries of Central Europe) and by average salary(not NULL), I provided average yearly salary as average value of all salaries in the same skill and ordered by average salary.
+```sql
+SELECT 
+    skills,
+    ROUND(AVG(salary_year_avg), 0) AS average_salary
+FROM job_postings_fact
+INNER JOIN skills_job_dim ON skills_job_dim.job_id = job_postings_fact.job_id
+INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
+WHERE 
+    job_title_short = 'Data Scientist' AND
+    salary_year_avg IS NOT NULL AND
+    job_location IN ('Germany', 
+                    'Poland', 
+                    'Czechia', 
+                    'Austria', 
+                    'Hungary', 
+                    'Slovakia', 
+                    'Slovenia', 
+                    'Switzerland', 
+                    'Liechtenstein')
+GROUP BY skills
+ORDER BY average_salary DESC
+LIMIT 25
+```
+The highest-paying skills are business intelligence and cloud/data engineering tools 
+like Looker, Databricks, Tableau, Spark, Snowflake, and Azure. Skills like R, Airflow, 
+SQL, and Power BI also command strong salaries. Core programming and data manipulation 
+tools such as Python, Pandas, Git/GitHub, and BigQuery are slightly lower but still essential. 
+Deep learning frameworks like PyTorch and TensorFlow have the lowest average salaries in this list, 
+suggesting that in Central Europe, cloud, BI, and big data expertise currently pay more than 
+pure deep learning skills.
+
+![Top Paying Skills](project_sql/plots/top_paying_skills_plot.png)
+*This chart shows the highest-paying Data Scientist skills in Central Europe, with each bar representing a skill and its corresponding average annual salary in USD.*
 ### 5. The Most Optimal Data Scientist Skills
+To identify most optimal skills I filtered data by position(Data Scientist) by location(Countries of Central Europe) and by average salary(not NULL). I added columns demand count and average yearly salary as I did in 3rd and 4th points. Then I filtered by demand count(more than 2) and ordered by average salary and demand count.
+```sql
+SELECT 
+    skills_dim.skill_id,
+    skills_dim.skills,
+    COUNT(skills_job_dim.job_id) AS demand_count,
+    ROUND(AVG(salary_year_avg), 0) AS avg_salary
+FROM job_postings_fact
+INNER JOIN skills_job_dim ON skills_job_dim.job_id = job_postings_fact.job_id
+INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
+WHERE 
+    job_title_short = 'Data Scientist' AND
+    salary_year_avg IS NOT NULL AND
+    job_location IN ('Germany', 
+                    'Poland', 
+                    'Czechia', 
+                    'Austria', 
+                    'Hungary', 
+                    'Slovakia', 
+                    'Slovenia', 
+                    'Switzerland', 
+                    'Liechtenstein')
+GROUP BY skills_dim.skill_id
+HAVING COUNT(skills_job_dim.job_id) > 2
+ORDER BY 
+    avg_salary DESC,
+    demand_count DESC
+LIMIT 10;
+```
+Among the top-paying skills, Tableau has the highest average salary ($153,586). Skills like Snowflake, Azure, and R also offer high salaries. In contrast, foundational skills like SQL and Python appear in more jobs but have slightly lower average salaries, reflecting their widespread use.
+
+![Optimal Skills](project_sql/plots/optimal_skills_plot.png)
+*This chart shows optimal Data Scientist skills in Central Europe, with each point representing demand count and average annual salary in USD, near every point listed it's skill's name*
 # What I Learned
 # Conclusions
