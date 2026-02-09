@@ -1,5 +1,5 @@
 # Introduction
-In this prject I will be exploring Data Science job market in Central Europe. I will dive into top-paying roles, in-demand skills and the most optimal skills for Data Scientists.
+In this project I will be exploring Data Science job market in Central Europe. I will dive into top-paying roles, in-demand skills and the most optimal skills for Data Scientists.
 SQL queries and Jupiter Notebook here: [project_sql folder](project_sql)
 # Background
 The Data Science field continues to evolve rapidly, with new tools, cloud platforms, and machine learning frameworks emerging every year. Central Europe has become an increasingly competitive region for tech talent, making it important to understand which skills provide the greatest career advantage.
