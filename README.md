@@ -53,8 +53,49 @@ The companies offering these positions are primarily large international corpora
 
 ![Top Paying Jobs](project_sql/plots/top_paying_jobs_plot.png)
 *This chart shows the highest-paying Data Scientist jobs in Central Europe, with each bar representing a job title and its corresponding average annual salary in USD.*
-
 ### 2. Top Paying Data Scientist Jobs With Skills
+To identify which skills are needed for each job I used previous query as a CTE and added skill names column.
+```sql
+WITH top_paying_jobs_in_CE AS (
+    SELECT  
+        job_id,
+        job_title,
+        name AS company_name,
+        job_location,
+        job_schedule_type,
+        salary_year_avg,
+        job_posted_date
+    FROM job_postings_fact
+    LEFT JOIN company_dim ON company_dim.company_id = job_postings_fact.company_id
+    WHERE 
+        job_title_short = 'Data Scientist' AND
+        job_location IN ('Germany', 
+                        'Poland', 
+                        'Czechia', 
+                        'Austria', 
+                        'Hungary', 
+                        'Slovakia', 
+                        'Slovenia', 
+                        'Switzerland', 
+                        'Liechtenstein') AND
+        salary_year_avg IS NOT NULL
+        ORDER BY salary_year_avg DESC
+        LIMIT 10
+)
+SELECT
+    top_paying_jobs_in_CE.*,
+    skills
+FROM top_paying_jobs_in_CE
+INNER JOIN skills_job_dim ON skills_job_dim.job_id = top_paying_jobs_in_CE.job_id
+INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
+ORDER BY salary_year_avg DESC
+```
+The most common skills required across these top Central Europe jobs are Python and SQL, 
+which appear almost everywhere. Many roles also expect knowledge of R, Spark, and big data/cloud platforms 
+like AWS, Azure, GCP, Databricks, and Snowflake. Tableau, Power BI, and Looker are frequently mentioned for 
+visualization, and Airflow, Git, and GitHub are common for workflow and version control. For more advanced roles, 
+familiarity with machine learning and deep learning frameworks like scikit-learn, TensorFlow, PyTorch, MXNet, and 
+Theano is often expected.
 ### 3. Top Demanded Data Scientist Skills
 ### 4. Top Paying Data Scientist Skills
 ### 5. The Most Optimal Data Scientist Skills
